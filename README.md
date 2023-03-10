@@ -47,6 +47,8 @@ function descendingOrder(n) {
 	* HTML и CSS. Adaptive Website Coding and Automation
 	* JavaScript. Professional Development of Web Interfaces
 	* JavaScript. Architecture of Front-end Applications
+
+<img src="../html-1.jpg" width="250" height="auto">
 ![](https://i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg "Professional Website Coding ")
 ![Adaptive Website Coding and Automation](https://i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg)
 ![Professional Development of Web Interfaces](https://i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg)
