@@ -55,3 +55,5 @@ function descendingOrder(n) {
 * **Russian** - native speaker.
 * **English** - A2 
 
+
+[rsschool-cv](https://GITHUB-USERNAME.github.io/rsschool-cv/cv "My CV")
