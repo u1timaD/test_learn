@@ -48,10 +48,7 @@ function descendingOrder(n) {
 	* JavaScript. Professional Development of Web Interfaces
 	* JavaScript. Architecture of Front-end Applications
 
-<img src="img/html-1.jpg" width="250" height="auto" alt="Certificate of finished Professional Website Coding courses" title="Professional Website Coding">
-<img src="img/html-2.jpg" width="250" height="auto" alt="Certificate of Adaptive Website Coding and Automation courses" title="Professional Website Coding">
-<img src="img/js-1.jpg" width="250" height="auto" alt="Certificate of Professional Development of Web Interfaces courses" title="Professional Website Coding">
-<img src="img/js-2.jpg" width="250" height="auto" alt="Certificate of finished Architecture of Front-end Applications courses" title="Professional Website Coding">
+<img src="img/html-1.jpg" width="250" height="auto" alt="Certificate of finished Professional Website Coding courses" title="Professional Website Coding"> <img src="img/html-2.jpg" width="250" height="auto" alt="Certificate of Adaptive Website Coding and Automation courses" title="Professional Website Coding"> <img src="img/js-1.jpg" width="250" height="auto" alt="Certificate of Professional Development of Web Interfaces courses" title="Professional Website Coding"> <img src="img/js-2.jpg" width="250" height="auto" alt="Certificate of finished Architecture of Front-end Applications courses" title="Professional Website Coding">
 
 ## **Languages**
 
