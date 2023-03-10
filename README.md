@@ -47,13 +47,11 @@ function descendingOrder(n) {
 	* HTML и CSS. Adaptive Website Coding and Automation
 	* JavaScript. Professional Development of Web Interfaces
 	* JavaScript. Architecture of Front-end Applications
+![](https://i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg "Professional Website Coding ")
+![Adaptive Website Coding and Automation](https://i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg)
+![Professional Development of Web Interfaces](https://i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg)
+![Architecture of Front-end Applications](https://i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg)
 
- [Professional Website Coding]: //i.postimg.cc/MpjgqGxG/10-03-2023-000440-q9-Bfa.jpg
- 
- ![](//i.postimg.cc/Prnw23xF/10-03-2023-000440-q9-Bfa.jpg 'Professional Website Coding')
- ![](//i.postimg.cc/ZKQXGdGg/10-03-2023-000519-Nn-P15.jpg 'Adaptive Website Coding and Automation')
- ![](//i.postimg.cc/X7qT18zd/10-03-2023-000606-CNPBj.jpg 'Professional Development of Web Interfaces')
- ![](//i.postimg.cc/g0FQJPkH/10-03-2023-000650-z-J4mh.jpg 'Architecture of Front-end Applications')  
 
 ## **Languages**
 
