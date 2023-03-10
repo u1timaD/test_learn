@@ -57,3 +57,21 @@ function descendingOrder(n) {
 
 
 # [rsschool-cv](https://GITHUB-USERNAME.github.io/rsschool-cv/cv "My CV")
+
+
+	2023-03-29
+	CV#1. Markdown & Git
+
+1. Task: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/cv/git-markdown.md
+2. Screenshot:
+   ![](https://docs.rs.school/images/fancy-weather.png)
+3. Deploy: https://u1timad.github.io/rsschool-cv/cv
+4. Done 10.03.2023 / deadline 29.03.2023
+5. Score: 100 / 100
+- Вёрстка, дизайн, UI (15/30)
+  - [x] минимальная ширина страницы, при которой она отображается корректно – 320 рх (10)
+  - [±] внешний вид приложения внешне соответствует макету или является его улучшенной версией (5/10)   
+  - [ ] приложение корректно отображается для любого выбранного языка (0)
+- В блоке "Погода за сегодня" отображаются следующие данные (15/20)
+  - [x] данные о погоде и местоположении пользователя (10)
+  - [±] часы, обновляющие время каждую секунду (5/10) 
