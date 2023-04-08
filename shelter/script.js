@@ -14,11 +14,31 @@
 // console.log(dubleArr(mainArr)) 
 // console.log(mainArr)
 //        ----------0  -------1
-let mainArr = [1,2,3,4,5,6,7,8]
+let mainArr = [0,1,2,3,4,5,6,7]
+
+let mainArr48 = []
+
+
+for ( let i = 0; i < 3; i++) {
+	mainArr48.push(...mainArr)
+}
+
+let generateArray = () => {
+	let mainArrShake = []
+	for(let i=0; i<3;i++) {
+		mainArr48.slice(0,6).sort(() => Math.random() - 0.5).push(mainArrShake);
+		console.log(mainArr48)
+	}
+	return mainArrShake;
+}
+console.log(generateArray())
+
+// console.log(mainArr48)
+
 
 let MassMass = [];
 let safe = [];
-const SIZE = 6;
+const SIZE = 8;
 
 
 let arr = mainArr.sort(() => Math.random() - 0.5);
@@ -41,10 +61,10 @@ let prev = (mas) => {
 	return;
 }
 
-console.log(`${MassMass} - ВХОЖДЕНИЕ`)
-next (MassMass)
-console.log(MassMass)
-next (MassMass)
+// console.log(`${MassMass} - ВХОЖДЕНИЕ`)
+// next (MassMass)
+// console.log(MassMass)
+// next (MassMass)
 // console.log(`${MassMass} - ВПЕРЁД`)
 // next(MassMass)
 // console.log(`${MassMass} - ВПЕРЁД`)
