@@ -49,13 +49,30 @@ function descendingOrder(n) {
 	* JavaScript. Professional Development of Web Interfaces
 	* JavaScript. Architecture of Front-end Applications
 
-<img src="html-1.jpg" width="250" height="auto" alt="Certificate of finished Professional Website Coding courses" title="Professional Website Coding">
-<img src="html-2.jpg" width="250" height="auto" alt="Certificate of Adaptive Website Coding and Automation courses" title="Professional Website Coding">
-<img src="js-1.jpg" width="250" height="auto" alt="Certificate of Professional Development of Web Interfaces courses" title="Professional Website Coding">
-<img src="js-2.jpg" width="250" height="auto" alt="Certificate of finished Architecture of Front-end Applications courses" title="Professional Website Coding">
+<img src="img/html-1.jpg" width="230" height="auto" alt="Certificate of finished Professional Website Coding courses" title="Professional Website Coding"> <img src="img/html-2.jpg" width="230" height="auto" alt="Certificate of Adaptive Website Coding and Automation courses" title="Professional Website Coding"> <img src="img/js-1.jpg" width="230" height="auto" alt="Certificate of Professional Development of Web Interfaces courses" title="Professional Website Coding"> <img src="img/js-2.jpg" width="230" height="auto" alt="Certificate of finished Architecture of Front-end Applications courses" title="Professional Website Coding" _blank="none">
 
 ## **Languages**
 
 * **Russian** - native speaker.
 * **English** - A2 
 
+
+# [rsschool-cv](https://GITHUB-USERNAME.github.io/rsschool-cv/cv "My CV")
+
+
+	2023-03-29
+	CV#1. Markdown & Git
+
+1. Task: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/cv/git-markdown.md
+2. Screenshot:
+   ![](https://docs.rs.school/images/fancy-weather.png)
+3. Deploy: https://u1timad.github.io/rsschool-cv/cv
+4. Done 10.03.2023 / deadline 29.03.2023
+5. Score: 100 / 100
+- Вёрстка, дизайн, UI (15/30)
+  - [x] минимальная ширина страницы, при которой она отображается корректно – 320 рх (10)
+  - [±] внешний вид приложения внешне соответствует макету или является его улучшенной версией (5/10)   
+  - [ ] приложение корректно отображается для любого выбранного языка (0)
+- В блоке "Погода за сегодня" отображаются следующие данные (15/20)
+  - [x] данные о погоде и местоположении пользователя (10)
+  - [±] часы, обновляющие время каждую секунду (5/10) 
