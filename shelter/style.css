@@ -47,3 +47,50 @@ button[type="button"] {
 span {
 	display: block;
 }
+
+
+.textarea {
+	font-size: 40px;
+	margin: 0 auto;
+}
+
+.key-board {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	max-width: 1400px;
+	height: 400px;
+	background-color: aquamarine;
+	margin: 0;
+	gap: 10px;
+}
+
+.key-line {
+	display: flex;
+	column-gap: 10px;
+}
+
+.key-button {
+	border-radius: 5px;
+	display: block;
+	width: 70px;
+	height: 70px;
+	background-color: rebeccapurple;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+}
+
+.key-button:hover {
+	opacity: 0.7;	
+}
+
+.key-name {
+	display: block;
+	color: bisque;
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	height: auto;
+}
