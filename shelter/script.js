@@ -70,11 +70,13 @@ for (let i = 0; i < en.length; i++) {
 	keyName[i].textContent = Object.values(en[i])[0];
 }
 
-const keyBoard = document.querySelector('.key-board');
-keyBoard.addEventListener('click', (evt) => {
+function buttonClick (evt) {
 	textArea.value += evt.target.textContent;
-	
-})
+
+}
+
+const keyBoard = document.querySelector('.key-board');
+keyBoard.addEventListener('click', buttonClick)
 
 
 // const keyCodes = { 
