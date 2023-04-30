@@ -16,15 +16,15 @@ body.prepend(textArea);
 const en = [
 	{'Backquote' : ['`', '~', 'ё', 'Ё']},
 	{'Digit1' : ['1', '!', '1', '!']},
-	{'Digit1' : ['2', '@', '2', '"']},
-	{'Digit1' : ['3', '#', '3', '№']},
-	{'Digit1' : ['4', '$', '4', ';']},
-	{'Digit1' : ['5', '%', '5', '%']},
-	{'Digit1' : ['6', '^', '6', ':']},
-	{'Digit1' : ['7', '&', '7', '?']},
-	{'Digit1' : ['8', '*', '8', '*']},
-	{'Digit1' : ['9', '(', '9', '(']},
-	{'Digit1' : ['0', ')', '0', ')']},
+	{'Digit2' : ['2', '@', '2', '"']},
+	{'Digit3' : ['3', '#', '3', '№']},
+	{'Digit4' : ['4', '$', '4', ';']},
+	{'Digit5' : ['5', '%', '5', '%']},
+	{'Digit6' : ['6', '^', '6', ':']},
+	{'Digit7' : ['7', '&', '7', '?']},
+	{'Digit8' : ['8', '*', '8', '*']},
+	{'Digit9' : ['9', '(', '9', '(']},
+	{'Digit0' : ['0', ')', '0', ')']},
 	{'Minus' : ['-', '_', '-', '_']},
 	{'Equal' : ['=', '+', '=', '+']},
 	{'Backspace' : ['Backspace', 'Backspace', 'Backspace', 'Backspace']},
@@ -59,39 +59,32 @@ const en = [
 	{'Quote' : ["'", '"', 'э', 'Э']},
 	{'Enter' : ['Enter', 'Enter', 'Enter', 'Enter']},
 
-	{'Shift' : ['Shift', 'Shift', 'Shift', 'Shift']},
-	{'KeyA' : ['z', 'Z', 'я', 'Я']},
-	{'KeyS' : ['x', 'X', 'ч', 'Ч']},
-	{'KeyD' : ['c', 'C', 'с', 'С']},
-	{'KeyF' : ['v', 'V', 'м', 'М']},
-	{'KeyG' : ['b', 'B', 'и', 'и']},
-	{'KeyH' : ['n', 'N', 'т', 'Т']},
-	{'KeyJ' : ['m', 'M', 'ь', 'ь']},
-	{'KeyK' : [',', '<', 'б', 'Б']},
-	{'KeyK' : ['.', '>', 'ю', 'Ю']},
-	{'Semicolon' : ['/', '?', '.', ',']},
-	{'ArrowUp' : 'Up'},
-	{'Shift' : ['Shift','Shift', 'Shift', 'Shift']},
+	{'ShiftLeft' : ['Shift', 'Shift', 'Shift', 'Shift']},
+	{'KeyZ' : ['z', 'Z', 'я', 'Я']},
+	{'KeyX' : ['x', 'X', 'ч', 'Ч']},
+	{'KeyC' : ['c', 'C', 'с', 'С']},
+	{'KeyV' : ['v', 'V', 'м', 'М']},
+	{'KeyB' : ['b', 'B', 'и', 'и']},
+	{'KeyN' : ['n', 'N', 'т', 'Т']},
+	{'KeyM' : ['m', 'M', 'ь', 'ь']},
+	{'Comma' : [',', '<', 'б', 'Б']},
+	{'Period' : ['.', '>', 'ю', 'Ю']},
+	{'Slash' : ['/', '?', '.', ',']},
+	{'ArrowUp' : ['\u25B2', '\u25B2', '\u25B2', '\u25B2']},
+	{'ShiftRight' : ['Shift','Shift', 'Shift', 'Shift']},
 
-	{'Control' : ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl']},
-	{'Meta' : ['Win', 'Win', 'Win', 'Win']},
-	{'Alt' : ['Alt', 'Alt', 'Alt', 'Alt']},
+	{'ControlLeft' : ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl']},
+	{'MetaLeft' : ['Win', 'Win', 'Win', 'Win']},
+	{'AltLeft' : ['Alt', 'Alt', 'Alt', 'Alt']},
 	{'Space' : [' ', ' ', ' ', ' ']},
-	{'Alt' : ['Alt', 'Alt', 'Alt', 'Alt']},
-	{'ArrowLeft' : 'Left'},
-	{'ArrowDown' : 'Down'},
-	{'ArrowRight' : 'Right'},
-	{'Control' : ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl']},
+	{'AltRight' : ['Alt', 'Alt', 'Alt', 'Alt']},
+	{'ArrowLeft' : ['\u25C2', '\u25C2', '\u25C2', '\u25C2']},
+	{'ArrowDown' : ['\u25BE', '\u25BE', '\u25BE', '\u25BE']},
+	{'ArrowRight' : ['\u25B8', '\u25B8', '\u25B8', '\u25B8']},
+	{'ControlRight' : ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl']},
 
 ]
 
-
-// console.log(Object.values(en[1])[0])
-
-
-document.addEventListener('keydown', (evt) => {
-	console.log(evt)
-})
 
 const getCreatKeyBoard = function(){
 	const keyBoard = document.createElement('section');
@@ -158,43 +151,48 @@ const getCreatKeyBoard = function(){
 	return keyBoard
 }
 
-
-
 // Отрисовываем клавиатуру
 textArea.insertAdjacentElement('afterend', getCreatKeyBoard());
-
-
-
-
-// отрисосвываем буквы на клавиатуру
-function getRenderWords(lang = 0){
-	const keyName = document.querySelectorAll('.key-name');
-		for (let i = 0; i < en.length; i++) {
-      const word = Object.values(en[i])[0][lang];
-      keyName[i].textContent = word;
-
-      // if(capsLock) {
-      // keyName[i].textContent = word.charAt(0).toUpperCase() + word.slice(1)
-      // } else {
-
-      // }
-		}
-}
-getRenderWords()
-const name = window.localStorage.getItem('lang');
-window.localStorage.setItem('lang', language);
-
-// Это вообще надо ??
-let textAreaValues = []
-
-// Индикатор изменения регистра
-
 
 let capsLock = 'small';
 let language = 'en'
 
 
+// отрисосвываем буквы на клавиатуру
+// Создать кнопку через Class и добавить ей те или иные свойства
+function getRenderWords(lang = 0){
+	const keyName = document.querySelectorAll('.key-name');
+		for (let i = 0; i < en.length; i++) {
+      const word = Object.values(en[i])[0][lang];
 
+      if(capsLock === 'small') {
+        keyName[i].textContent = word;
+        keyName[i].dataset.name = Object.keys(en[i])[0];
+      } else {
+        keyName[i].textContent = word.charAt(0).toUpperCase() + word.slice(1)
+      }
+		}
+}
+getRenderWords()
+
+
+
+function getChangeForCapsLock() {
+  if (capsLock === 'small' && language === 'en') {
+    capsLock = 'big';
+    getRenderWords();
+  } else if (capsLock === 'big' && language === 'en') {
+    capsLock = 'small';
+    getRenderWords();
+  } else if (capsLock === 'small' && language === 'ru') {
+    capsLock = 'big';
+    getRenderWords(2);
+  } else if (capsLock === 'big' && language === 'ru') {
+    capsLock = 'small';
+    getRenderWords();
+  }
+
+}
 
 function getChangeCase() {
   if (capsLock === 'small' && language === 'en') {
@@ -213,16 +211,16 @@ function getChangeCase() {
 }
 
 function getChangeLanguage() {
-  if (language === 'en' && capsLock) {
+  if (language === 'en' && capsLock === 'small') {
     getRenderWords(2)
     language = 'ru';
-  } else if (language === 'en' && !capsLock) {
+  } else if (language === 'en' && capsLock === 'big') {
     getRenderWords(3)
     language = 'ru';
-  } else if (language = 'ru' && capsLock) {
+  } else if (language = 'ru' && capsLock === 'small') {
     getRenderWords(0)
     language = 'en';
-  } else if (language = 'ru' && !capsLock) {
+  } else if (language = 'ru' && capsLock === 'big') {
     getRenderWords(1)
     language = 'en';
   }
@@ -234,102 +232,133 @@ function buttonClick (evt) {
 	const end = textArea.selectionEnd;
 
 	if (point === 'Backspace') {
-		// вынести в util
 		if (start === end) {
 			textArea.setRangeText('', start-1, end, "end");
-			textArea.focus();
 		} else {
 			textArea.setRangeText('', start, end, "select");
-			textArea.focus();
 		}
 	} else if (point === 'Tab') {
     textArea.setRangeText('   ', start, end, "end");
-		textArea.focus();
-	} else if (point === 'Shift') {
-
+	} else if (point === 'Del') {
+    textArea.setRangeText('', start, end+1, "end");
+	} else if (point === 'Enter') {
+    textArea.setRangeText('\n', start, end, "end");
+	} else if (['Shift', 'Alt', 'Ctrl', 'Win'].includes((point))) {
 	} else if (point === 'CapsLock') {
-
-    // Создать отдельный объект для Капслока
     getChangeCase()
-      // evt.target.addEventListener('click', ()=>{
-      //   if (capsLock = 'small') {
-      //     const dataLines = document.querySelector('[data-line="1"]');
-      //     const dataButtons = dataLines.querySelectorAll('.key-button');
-
-      //     for (let i=1; i<=10; i++) {
-      //     dataButtons[i].classList.add('upperCase');
-      //   }
-      //   capsLock = 'big';
-
-      // } else if (capsLock = 'big'){
-      //   const dataLines = document.querySelector('[data-line="1"]');
-      //   const dataButtons = dataLines.querySelectorAll('.key-button');
-      //   console.log(dataButtons)
-      //   for (let i=1; i<=10; i++) {
-      //     dataButtons[i].classList.remove('upperCase');
-      //   }
-      //   capsLock = 'small'
-      //   }
-      // })
   }
 
 	else {
-		// вынести в util
+    evt.target.style.backgroundColor = 'green';
 		textArea.setRangeText(point, start, end, "end");
     textArea.focus();
 	}
 }
 
+function buttonOnClick (evt) {
+  const point = evt.target.textContent;
 
-
-
-
-textArea.addEventListener('keydown', (evt) => {
-  const start = textArea.selectionStart;
-	const end = textArea.selectionEnd;
-  const key = evt.key;
-
-
-  if (key === 'Tab') {
-    textArea.setRangeText('   ', start, end, "end");
+  if (['Backspace', 'Tab', 'Del', 'Enter', 'Shift', 'Alt', 'Ctrl', ' ', 'Win'].includes(point)) {
     textArea.focus();
-  } else if (key === 'CapsLock') {
-    getChangeCase()
-  } else if (key === 'Shift') {
-    key.repeat = true;
-    getChangeCase()
-  } else if (key === 'Control' || key === 'Alt') {
-    console.log("Привет")
+  }
+  else {
+    evt.target.style.backgroundColor = 'rebeccapurple';
   }
 
+}
+
+function ColorOfButtonOn (evt) {
+  const key = evt.code;
+  const button = document.querySelector(`[data-name="${key}"]`);
+  button.style.backgroundColor = 'white';
+}
+
+function ColorOfButtonOff (evt) {
+  const key = evt.code;
+  const button = document.querySelector(`[data-name="${key}"]`);
+  button.style.backgroundColor = '';
+}
+
+
+window.addEventListener('keydown', (evt) => {
+  textArea.focus()
+  ColorOfButtonOn(evt);
 })
 
-textArea.addEventListener('keyup', (evt) => {
+window.addEventListener('keyup', (evt) => {
+  textArea.focus()
+  ColorOfButtonOff(evt);
+})
+
+
+// ВВОД С КЛАВИАТУРЫ
+
+function pressOnButton (evt) {
+  evt.preventDefault()
   const start = textArea.selectionStart;
 	const end = textArea.selectionEnd;
-  const key = evt.key;
+  const key = evt.code;
+  const button = document.querySelector(`[data-name="${key}"]`).textContent;
 
-  if(key === 'Tab') {
-      textArea.focus();
-  } else if (key === 'Shift') {
+
+  if (key === 'Backspace') {
+		if (start === end) {
+			textArea.setRangeText('', start-1, end, "end");
+		} else {
+			textArea.setRangeText('', start, end, "select");
+		}
+	} else if (key === 'Tab') {
+    textArea.setRangeText('   ', start, end, "end");
+	} else if (key === 'Delete') {
+    textArea.setRangeText('', start, end+1, "end");
+	} else if (key === 'Enter') {
+    textArea.setRangeText('\n', start, end, "end");
+	} else if (['AltLeft', 'AltRight', 'ControlLeft', 'ControlRight', 'MetaLeft'].includes((key))) {
+	} else if (key === 'ShiftLeft' || key === 'ShiftRight') {
+    getChangeCase()
+  } else if (key === 'CapsLock') {
+    getChangeForCapsLock()
+  } else {
+    textArea.setRangeText(button, start, end, "end");
+    textArea.focus();
+  }
+}
+
+function pressOffButton (evt) {
+  const key = evt.code;
+  if (key === 'ShiftLeft' || key === 'ShiftRight') {
     getChangeCase()
   }
+}
 
-})
+textArea.addEventListener('keydown', pressOnButton)
+textArea.addEventListener('keyup', pressOffButton)
+
+
+
+
+
+
 
 const keyBoard = document.querySelector('.key-board');
-keyBoard.addEventListener('click', buttonClick)
+keyBoard.addEventListener('mousedown', buttonClick)
+keyBoard.addEventListener('mouseup', buttonOnClick);
+
+
+
+// Хуйня для шифта
+function getShiftClick(){
+  getChangeCase()
+}
 
 const keyLine = document.querySelector('[data-line="3"]');
-const shiftButton = keyLine.querySelector('[data-button-name="0"]');
-shiftButton.addEventListener('mousedown', () => {
-  getChangeCase()
+const shiftButtonFirst = keyLine.querySelector('[data-button-name="0"]');
+const shiftButtonLast = keyLine.querySelector('[data-button-name="12"]');
 
-})
-
-shiftButton.addEventListener('mouseup', () => {
-  getChangeCase()
-})
+shiftButtonFirst.addEventListener('mousedown', getShiftClick)
+shiftButtonFirst.addEventListener('mouseup', getShiftClick);
+shiftButtonLast.addEventListener('mousedown', getShiftClick)
+shiftButtonLast.addEventListener('mouseup', getShiftClick);
 
 
 function runOnKeys(func, ...codes) {

@@ -75,7 +75,6 @@ span {
 	display: block;
 	width: 70px;
 	height: 70px;
-	background-color: rebeccapurple;
 	margin: 0;
 	padding: 0;
 	cursor: pointer;
@@ -86,71 +85,72 @@ span {
 }
 
 .key-name {
+
 	display: block;
 	color: bisque;
 	font-size: 20px;
 	margin: 0;
 	padding: 0;
-	width: auto;
-	height: auto;
+	width: 100%;
+	height: 100%;
+  background-color: rebeccapurple;
 }
 
 .key-line[data-line="0"] > .key-button:last-child {
-	background-color: red;
+	outline: 5px solid red;
 	width: 150px;
 }
 
 .key-line[data-line="1"] > .key-button:nth-child(1) {
-	background-color: red;
+	outline: 5px solid red;
 	width: 70px;
 }
 
 
 
-
 .key-line[data-line="2"] > .key-button:nth-child(1) {
-	background-color: red;
+	outline: 5px solid red;
 	width: 150px;
 }
 
 .key-line[data-line="2"] > .key-button:last-child {
-	background-color: red;
+	outline: 5px solid red;
 	width: 150px;
 }
 
 
 .key-line[data-line="3"] > .key-button:nth-child(1) {
-	background-color: red;
+	outline: 5px solid red;
 	width: 150px;
 }
 
 .key-line[data-line="3"] > .key-button:last-child {
-	background-color: red;
+	outline: 5px solid red;
 	width: 150px;
 }
 
 .key-line[data-line="4"] > .key-button:nth-child(1) {
-	background-color: red;
+	outline: 5px solid red;
 }
 .key-line[data-line="4"] > .key-button:nth-child(2) {
-	background-color: red;
+	outline: 5px solid red;
 }
 .key-line[data-line="4"] > .key-button:nth-child(3) {
-	background-color: red;
+	outline: 5px solid red;
 }
 
 
 .key-line[data-line="4"] > .key-button:nth-child(4) {
-	background-color: red;
+	outline: 5px solid red;
 	width: 550px;
 }
 
 .key-line[data-line="4"] > .key-button:nth-child(5) {
-	background-color: red;
+	outline: 5px solid red;
 }
 
 .key-line[data-line="4"] > .key-button:last-child {
-	background-color: red;
+	outline: 5px solid red;
 }
 
 .upperCase {
