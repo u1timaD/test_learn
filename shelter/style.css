@@ -1,0 +1,158 @@
+* {
+	box-sizing: border-box;
+	margin: 0 auto;
+	padding: 0;
+}
+
+
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	background-color: green;
+
+}
+
+input[type="number"] {
+	width: 400px;
+	height: 400px;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 70px;
+	margin-bottom: 30px;
+
+}
+
+button[type="button"] {
+	width: 100px;
+	height: 70px;
+	background: rebeccapurple;
+	border: none;
+	cursor: pointer;
+}
+
+.word {
+	box-sizing: border-box;
+	display: block;
+	width: 50px;
+	height: 50px;
+	border: 3px solid black;
+	background-color: bisque;
+	text-align: center;
+	padding: 20px;
+}
+
+span {
+	display: block;
+}
+
+
+.textarea {
+	font-size: 40px;
+	margin: 0 auto;
+}
+
+.key-board {
+	display: flex;
+	flex-direction: column;
+	max-width: 1400px;
+	height: 400px;
+	background-color: aquamarine;
+	margin: 0;
+	gap: 10px;
+}
+
+.key-line {
+	display: flex;
+	column-gap: 10px;
+	margin: 0;
+}
+
+.key-button {
+	border-radius: 5px;
+	display: block;
+	width: 70px;
+	height: 70px;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+}
+
+.key-button:hover {
+	opacity: 0.7;
+}
+
+.key-name {
+
+	display: block;
+	color: bisque;
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+  background-color: rebeccapurple;
+}
+
+.key-line[data-line="0"] > .key-button:last-child {
+	outline: 5px solid red;
+	width: 150px;
+}
+
+.key-line[data-line="1"] > .key-button:nth-child(1) {
+	outline: 5px solid red;
+	width: 70px;
+}
+
+
+
+.key-line[data-line="2"] > .key-button:nth-child(1) {
+	outline: 5px solid red;
+	width: 150px;
+}
+
+.key-line[data-line="2"] > .key-button:last-child {
+	outline: 5px solid red;
+	width: 150px;
+}
+
+
+.key-line[data-line="3"] > .key-button:nth-child(1) {
+	outline: 5px solid red;
+	width: 150px;
+}
+
+.key-line[data-line="3"] > .key-button:last-child {
+	outline: 5px solid red;
+	width: 150px;
+}
+
+.key-line[data-line="4"] > .key-button:nth-child(1) {
+	outline: 5px solid red;
+}
+.key-line[data-line="4"] > .key-button:nth-child(2) {
+	outline: 5px solid red;
+}
+.key-line[data-line="4"] > .key-button:nth-child(3) {
+	outline: 5px solid red;
+}
+
+
+.key-line[data-line="4"] > .key-button:nth-child(4) {
+	outline: 5px solid red;
+	width: 550px;
+}
+
+.key-line[data-line="4"] > .key-button:nth-child(5) {
+	outline: 5px solid red;
+}
+
+.key-line[data-line="4"] > .key-button:last-child {
+	outline: 5px solid red;
+}
+
+.upperCase {
+  text-transform: uppercase;
+}
