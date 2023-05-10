@@ -1,0 +1,26 @@
+{
+  "name": "test_learn",
+  "version": "1.0.0",
+  "description": "sd[rsschool-cv](\"Ссылка на визитку\")",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/u1timaD/test_learn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/u1timaD/test_learn/issues"
+  },
+  "homepage": "https://github.com/u1timaD/test_learn#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
