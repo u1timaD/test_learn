@@ -1,14 +1,15 @@
+# Файлы и папки операционной системы
 .DS_Store
-.idea
-.vscode
-*.ai
-*.log
-*.pdf
-*.psd
-*.sublime*
-node_modules/
-npm-debug.*
-source/css/*.css
-source/css/*.map
 Thumbs.db
-package-lock.json
+
+# Файлы редактора
+.idea
+*.sublime*
+.vscode
+
+# Вспомогательные файлы
+*.log*
+node_modules/
+
+# Собранные файлы (допишите самостоятельно)
+build/
