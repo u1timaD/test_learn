@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+  flex-wrap: wrap;
+}
+
+.line {
+  display: flex;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: bisque;
+  border: 1px black solid;
+  cursor: pointer;
+}
+
+.cell-active {
+  background-color: white;
+}
+
+.cell-picture {
+  background-image: url('minesweeper/bomb1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
