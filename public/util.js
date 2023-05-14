@@ -13,15 +13,13 @@ const getGenerateDubleArray = (GAME_FIELD) => {
   return FIELD_ARRAY;
 };
 
-const getZegoApprove = (number) => {
-  if(number.toString().length === 1) {
-    return `0${number}`;
-  } else {
-    return number.toString();
-  }
-}
 
-// !
+const checkArrayInMatrix = (matrix, array) => {
+  return matrix.every(row => {
+    return array.every((value, index) => row[index] === value);
+  });
+};
+
 const generateRandomNumber = (mine, size) => {
   // const MINE_LOC = new Map();
   const ALL_MINE_LOC = [];
@@ -30,24 +28,39 @@ const generateRandomNumber = (mine, size) => {
     const LINE = Math.floor(Math.random() * size) + 1;
     const CELL = Math.floor(Math.random() * size) + 1;
 
-    // TODO: Добавить числа в массив, пройтис по нему.
-    // TODO: Если есть похожие, не добавлять (попробуй массив через Set)
-
+    // TODO: Не исключает из массива тех числе что уже есть
+    // !ИСПРАВИТЬ
     if(ALL_MINE_LOC.length === 0) {
       ALL_MINE_LOC.push([LINE, CELL]);
     }
+    else {
+      if(!(checkArrayInMatrix(ALL_MINE_LOC, [LINE, CELL]))) {
+        ALL_MINE_LOC.push([LINE, CELL]);
+      } else {
+        console.log(`${LINE},${CELL}Совпадение`)
+      }
 
-    if(ALL_MINE_LOC.length !== 0) {
 
-      // for(const row of ALL_MINE_LOC) {
-      //   const MINE_LOC_CURRENT = [LINE, CELL];
 
-      //   if(!(row.every((value, index)=> value === MINE_LOC_CURRENT[index]))) {
-
-      //     ALL_MINE_LOC.push([LINE, CELL]);
-      //   }
-      // }
     }
+  }
+  // console.log(ALL_MINE_LOC)
+
+    // if(ALL_MINE_LOC.length === 0) {
+    //   ALL_MINE_LOC.push([LINE, CELL]);
+    // }
+
+    // if(ALL_MINE_LOC.length !== 0) {
+
+    //   // for(const row of ALL_MINE_LOC) {
+    //   //   const MINE_LOC_CURRENT = [LINE, CELL];
+
+    //   //   if(!(row.every((value, index)=> value === MINE_LOC_CURRENT[index]))) {
+
+    //   //     ALL_MINE_LOC.push([LINE, CELL]);
+    //   //   }
+    //   // }
+    // }
 
 
 
@@ -81,7 +94,7 @@ const generateRandomNumber = (mine, size) => {
 
 
 
-  }
+
 
   return ALL_MINE_LOC;
   // return  MINE_LOC;
