@@ -61,19 +61,6 @@ const generateMine = (mineLocation) => {
 
 generateMine(MINE_LOCATION);
 
-
-const cellNuberCount = () => {
-    let count = 1;
-  const countFunct = () => {
-    // count+1
-    return count;
-  }
-  return countFunct;
-}
-
-const ad = cellNuberCount();
-
-
 // ! Добавление цифр вокруг бомб, исключая бомб
 const countNumberAroundCell = (location) => {
   const LINE = location[0];
@@ -81,7 +68,7 @@ const countNumberAroundCell = (location) => {
 
   const numberCell = document.querySelector(`[data-cell-number="${LINE}-${CELL}"]`);
   numberCell.style.backgroundColor = 'red';
-  
+
   const currentValue = parseInt(numberCell.textContent); // Получаем текущее значение и преобразуем его в число
 
   if (!isNaN(currentValue)) {
@@ -91,7 +78,6 @@ const countNumberAroundCell = (location) => {
     // Если текущее значение NaN (не число), то устанавливаем значение 1
     numberCell.textContent = 1;
   }
-
 }
 
 // ! Проверка Содержаться ли координаты в двумерном массиве
