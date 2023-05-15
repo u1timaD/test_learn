@@ -4,17 +4,26 @@ import { getGenerateDubleArray, generateRandomNumber } from './util.js';
 const QUANTITY_MINE = 15;
 // !Заменить на выбор с кнопок после 10\15\25 клеток
 const FIELD_SIZE = 10;
+let clickCell;
+
 
 
 
 const FILED_ARRAY = getGenerateDubleArray(FIELD_SIZE);
 
-const MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE);
+const MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE, clickCell);
+
+
 
 
 const BODY = document.querySelector('.body');
 const CONTAINER = document.createElement('div');
+
+const BTN = document.createElement('button');
+BTN.classList = 'btn';
+BTN.textContent = 'Кнопка';
 BODY.prepend(CONTAINER);
+BODY.prepend(BTN)
 
 // ! Переделать на классы
 // ! ТУТ создаём линии и ячейки и присваиваем каждой свой атрибут
@@ -36,10 +45,8 @@ for(let i = 1; i <= FIELD_SIZE; i++) {
   CONTAINER.append(LINE);
 }
 
-CONTAINER.addEventListener('click', (evt) => {
-  const CELL = evt.target;
-  CELL.classList.toggle('cell-active');
-})
+
+
 
 
 // ! Расставляет мин по полю, сделать так чтобы только после нажатия первой клетки
@@ -49,7 +56,6 @@ CONTAINER.addEventListener('click', (evt) => {
 
 // TODO: Приходит двумерный массив из строк, их к строке дата селл
 // TODO: И всё.
-// TODO: Н
 const generateMine = (mineLocation) => {
   for(const mine of mineLocation) {
     const MINE_LINE = mine[0];
@@ -59,7 +65,7 @@ const generateMine = (mineLocation) => {
   }
 }
 
-generateMine(MINE_LOCATION);
+
 
 // ! Добавление цифр вокруг бомб, исключая бомб
 const countNumberAroundCell = (location) => {
@@ -121,15 +127,25 @@ const setNumberAround = () => {
   })
 }
 
-setNumberAround()
-// class Cell {
-//   constructor(quantity) {
-//     this.quantity = quantity;
-//   }
-
-// }
 
 
-// // const cell = new Cell(2);
+
+const firstopenCell = () => {
+
+}
+
+const renderField = (evt) => {
+  clickCell = evt.target.getAttribute('data-cell-number');
+  setNumberAround(generateMine(MINE_LOCATION));
+}
+
+CONTAINER.addEventListener('click', renderField)
 
 
+const btnClick = (evt) => {
+  generateMine(MINE_LOCATION);
+  setNumberAround()
+
+}
+
+const btnStart = BTN.addEventListener('click', btnClick);

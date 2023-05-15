@@ -20,7 +20,8 @@ const checkArrayInMatrix = (matrix, array) => {
   });
 };
 
-const generateRandomNumber = (mine, size) => {
+const generateRandomNumber = (mine, size, clickCell) => {
+  console.log(clickCell)
   // const MINE_LOC = new Map();
   const ALL_MINE_LOC = [];
 
