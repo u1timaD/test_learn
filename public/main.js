@@ -1,20 +1,30 @@
-import { getGenerateDubleArray, generateRandomNumber } from './util.js';
+import { getGenerateDubleArray, generateRandomNumber, changeToNumber, checkArray} from './util.js';
 
 // !Заменить на запрос из input
-const QUANTITY_MINE = 15;
+const QUANTITY_MINE = 10;
 // !Заменить на выбор с кнопок после 10\15\25 клеток
 const FIELD_SIZE = 10;
-
-
-
+let fieldClick = 0;
 const FILED_ARRAY = getGenerateDubleArray(FIELD_SIZE);
 
-const MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE);
+let MINE_LOCATION;
 
 
 const BODY = document.querySelector('.body');
 const CONTAINER = document.createElement('div');
+
+const BTN = document.createElement('button');
+BTN.classList = 'btn';
+BTN.textContent = 'Кнопка';
 BODY.prepend(CONTAINER);
+BODY.prepend(BTN)
+
+const POPUP = document.createElement('div');
+POPUP.classList = 'popup';
+POPUP.textContent = 'Игра окончена'
+
+
+
 
 // ! Переделать на классы
 // ! ТУТ создаём линии и ячейки и присваиваем каждой свой атрибут
@@ -36,10 +46,8 @@ for(let i = 1; i <= FIELD_SIZE; i++) {
   CONTAINER.append(LINE);
 }
 
-CONTAINER.addEventListener('click', (evt) => {
-  const CELL = evt.target;
-  CELL.classList.toggle('cell-active');
-})
+
+
 
 
 // ! Расставляет мин по полю, сделать так чтобы только после нажатия первой клетки
@@ -49,7 +57,6 @@ CONTAINER.addEventListener('click', (evt) => {
 
 // TODO: Приходит двумерный массив из строк, их к строке дата селл
 // TODO: И всё.
-// TODO: Н
 const generateMine = (mineLocation) => {
   for(const mine of mineLocation) {
     const MINE_LINE = mine[0];
@@ -59,7 +66,7 @@ const generateMine = (mineLocation) => {
   }
 }
 
-generateMine(MINE_LOCATION);
+
 
 // ! Добавление цифр вокруг бомб, исключая бомб
 const countNumberAroundCell = (location) => {
@@ -121,15 +128,97 @@ const setNumberAround = () => {
   })
 }
 
-setNumberAround()
-// class Cell {
-//   constructor(quantity) {
-//     this.quantity = quantity;
-//   }
 
-// }
+// ! Массив открытых ячеек
+let openedCells = [];
+
+const checkEmptyCell = (loc, centerCell) => {
+let selectCells = loc;
+
+  for(const cell of selectCells) {
+    const numberCell = document.querySelector(`[data-cell-number="${cell[0]}-${cell[1]}"]`);
+    if (numberCell.textContent.length === 0 && !checkArray(openedCells, cell)) {
+      openedCells.push(cell);
+      findEmptyCellAround(cell);
+
+    } else {
+      numberCell.style.backgroundColor = 'orange';
+    }
+  }
+
+// ! Открыли квадраты по периметру
+// TODO: Сделать функцию открытия
+
+// !Далее смотри, если ячейка пустая заходим в неё и опять открываем все в радиусе
+
+  // !Если чейка НЕ ПУСТАЯ, то проверяем все ячейки вокруг (добавляем все ячейки в массив)
+ // ! Если хотя бы одна ячейка в окружении есть пустая, то проходим для каждой ячейки всё ещё раз.
+ // ! В противном случае выходим и нчего не делаем
+
+}
 
 
-// // const cell = new Cell(2);
+const findEmptyCellAround = (value) => {
+  const MINE_LINE = value[0];
+  const MINE_CELL = value[1];
+  const CENTER_CELL = [MINE_LINE, MINE_CELL];
+  const selectCells = []
+
+  for(let i=MINE_LINE-1; i<=MINE_LINE+1; i++) {
+    for(let j=MINE_CELL-1; j<=MINE_CELL+1; j++) {
+      const location = [i,j];
+
+      if (
+        i !== 0 &&
+        j !== 0 &&
+        i !== FIELD_SIZE + 1 &&
+        j !== FIELD_SIZE + 1
+      ) {
+        selectCells.push(location)
+      }
+    }
+  }
+  checkEmptyCell(selectCells, CENTER_CELL);
+}
 
 
+
+const renderField = (evt) => {
+  const CLICK_CELL = evt.target.getAttribute('data-cell-number');
+  const changeClickToArray = changeToNumber(CLICK_CELL);
+
+
+  // ! Самое первое нажатие
+  if (!fieldClick) {
+    fieldClick = 1;
+    MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE, CLICK_CELL);
+    setNumberAround(generateMine(MINE_LOCATION));
+  }
+
+  // ! Проверка если ткнул в пусое поле
+  if (evt.target.textContent.length === 0 && !checkArray(MINE_LOCATION, changeClickToArray)) {
+    const clickLocation = changeToNumber(CLICK_CELL);
+    findEmptyCellAround(clickLocation);
+  }
+
+  else if (evt.target.textContent.length !== 0 && !checkArray(MINE_LOCATION, changeClickToArray)) {
+
+    evt.target.style.backgroundColor = 'orange';
+
+    console.log('Попал в цифру');
+
+  } else {
+    console.log('Попал в бомбу')
+    BODY.append(POPUP);
+  }
+}
+
+CONTAINER.addEventListener('click', renderField);
+
+
+const btnClick = (evt) => {
+  generateMine(MINE_LOCATION);
+  setNumberAround();
+}
+
+const btnStart = BTN.addEventListener('click', btnClick);
