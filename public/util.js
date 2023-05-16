@@ -13,6 +13,8 @@ const getGenerateDubleArray = (GAME_FIELD) => {
   return FIELD_ARRAY;
 };
 
+// !Проверка есть ли массив в двумерном массиве
+const checkArray = (dubleArray, array) => dubleArray.some((index) => index[0] === array[0] && index[1] === array[1]);
 
 // ! Меняем координату из 2-3 в [2,3]
 const changeToNumber = (click) => {
@@ -42,6 +44,7 @@ const generateRandomNumber = (mine, size, clickCell) => {
     }
     else {
 
+      // !ЗАМЕНИТЬ НА ФУНКЦИЮ В ПРОВЕРКЕ. (Всё равно не исключает уже ту бомбу что есть)
       if((ALL_MINE_LOC.some((coord) => coord[0] === CLICK_CELL[0] && coord[1] === CLICK_CELL[1]))) {
         const index = ALL_MINE_LOC.findIndex((coord) => coord[0] === CLICK_CELL[0] && coord[1] === CLICK_CELL[1]);
         ALL_MINE_LOC.splice(index, 1);
@@ -62,4 +65,4 @@ const generateRandomNumber = (mine, size, clickCell) => {
 };
 
 
-export {getGenerateDubleArray, generateRandomNumber, changeToNumber};
+export {getGenerateDubleArray, generateRandomNumber, changeToNumber, checkArray};

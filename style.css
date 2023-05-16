@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+body {
+  position: relative;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -63,6 +67,17 @@
   height: 50px;
   background-color: blue;
   z-index: 3;
+}
 
-
+.popup {
+  position: absolute;
+  content: '';
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  color: blue;
+  font-size: 76px;
+  background-color: brown;
+  transform: translate(-50%);
 }
