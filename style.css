@@ -16,6 +16,10 @@
   display: flex;
 }
 
+.cell-box {
+  position: relative;
+}
+
 .cell {
   display: flex;
   align-items: center;
@@ -25,6 +29,7 @@
   background-color: bisque;
   border: 1px black solid;
   cursor: pointer;
+
 }
 
 .cell-active {
@@ -48,4 +53,16 @@
   margin: 0 auto;
   margin-top: 200px;
   color: wheat;
+}
+
+
+.shadow {
+  position: absolute;
+  content: '';
+  width: 80px;
+  height: 50px;
+  background-color: blue;
+  z-index: 3;
+
+
 }

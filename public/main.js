@@ -1,19 +1,13 @@
-import { getGenerateDubleArray, generateRandomNumber } from './util.js';
+import { getGenerateDubleArray, generateRandomNumber, changeToNumber } from './util.js';
 
 // !Заменить на запрос из input
-const QUANTITY_MINE = 15;
+const QUANTITY_MINE = 10;
 // !Заменить на выбор с кнопок после 10\15\25 клеток
 const FIELD_SIZE = 10;
-let clickCell;
-
-
-
 
 const FILED_ARRAY = getGenerateDubleArray(FIELD_SIZE);
 
-const MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE, clickCell);
-
-
+let MINE_LOCATION;
 
 
 const BODY = document.querySelector('.body');
@@ -128,15 +122,83 @@ const setNumberAround = () => {
 }
 
 
+const findE = (value) => {
+  const MINE_LINE = value[0];
+  const MINE_CELL = value[1];
+  for(let i=MINE_LINE-1; i<=MINE_LINE+1; i++) {
+    for(let j=MINE_CELL-1; j<=MINE_CELL+1; j++) {
+      const location = [i,j];
 
+      if (
+        i !== 0 &&
+        j !== 0 &&
+        i !== FIELD_SIZE + 1 &&
+        j !== FIELD_SIZE + 1
+      ) {
+        const numberCell = document.querySelector(`[data-cell-number="${i}-${j}"]`);
+        numberCell.style.backgroundColor = 'green';
 
-const firstopenCell = () => {
-
+    console.log(numberCell)
+      }
+    }
+  }
 }
 
+const checkEmptyCell = (loc) => {
+  const numberCell = document.querySelector(`[data-cell-number="${loc[0]}-${loc[1]}"]`);
+  let colorArray = [];
+// ! Открыли квадраты по периметру
+// TODO: Сделать функцию открытия
+
+// !Далее смотри, если ячейка пустая заходим в неё и опять открываем все в радиусе
+
+  if (numberCell.textContent.length === 0) {
+    numberCell.style.backgroundColor = 'green';
+    
+    // findE(loc);
+
+  }
+
+  // !Если чейка НЕ ПУСТАЯ, то проверяем все ячейки вокруг (добавляем все ячейки в массив)
+ // ! Если хотя бы одна ячейка в окружении есть пустая, то проходим для каждой ячейки всё ещё раз.
+ // ! В противном случае выходим и нчего не делаем
+  else {
+
+  }
+  console.log(colorArray)
+}
+
+const findEmptyCellAround = (value, arr) => {
+  const MINE_LINE = value[0];
+  const MINE_CELL = value[1];
+
+  for(let i=MINE_LINE-1; i<=MINE_LINE+1; i++) {
+    for(let j=MINE_CELL-1; j<=MINE_CELL+1; j++) {
+      const location = [i,j];
+
+      if (
+        i !== 0 &&
+        j !== 0 &&
+        i !== FIELD_SIZE + 1 &&
+        j !== FIELD_SIZE + 1
+      ) {
+        checkEmptyCell(location);
+      }
+    }
+  }
+}
+
+
+
 const renderField = (evt) => {
-  clickCell = evt.target.getAttribute('data-cell-number');
+  const CLICK_CELL = evt.target.getAttribute('data-cell-number');
+  MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE, CLICK_CELL);
   setNumberAround(generateMine(MINE_LOCATION));
+
+ if (evt.target.textContent.length === 0) {
+  const clickLocation = changeToNumber(CLICK_CELL);
+  findEmptyCellAround(clickLocation)
+  }
 }
 
 CONTAINER.addEventListener('click', renderField)

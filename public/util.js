@@ -1,4 +1,4 @@
-
+const CONTAINER = document.createElement('div');
 
 // ! Генерация двумерного массива в зависимости от количества ячеек GAME_FIELD;
 const getGenerateDubleArray = (GAME_FIELD) => {
@@ -14,18 +14,24 @@ const getGenerateDubleArray = (GAME_FIELD) => {
 };
 
 
-const checkArrayInMatrix = (matrix, array) => {
-  return matrix.every(row => {
-    return array.every((value, index) => row[index] === value);
-  });
-};
+// ! Меняем координату из 2-3 в [2,3]
+const changeToNumber = (click) => {
+
+  const LINE_NUMBER = click.match(/^([^-\s]+)/);
+  const CELL_NUMBER = click.match(/-(.*)$/);
+  const CLICK_CELL = [+LINE_NUMBER[1], +CELL_NUMBER[1]];
+  return CLICK_CELL;
+}
+
 
 const generateRandomNumber = (mine, size, clickCell) => {
-  console.log(clickCell)
-  // const MINE_LOC = new Map();
-  const ALL_MINE_LOC = [];
 
-  for (let i = 1; i <= mine; i++ ) {
+  const CLICK_CELL = changeToNumber(clickCell);
+  const ALL_MINE_LOC = [];
+  // let allMine = mine;
+
+
+  for (let i = 1; ALL_MINE_LOC.length <= mine-1  ; i++ ) {
     const LINE = Math.floor(Math.random() * size) + 1;
     const CELL = Math.floor(Math.random() * size) + 1;
 
@@ -35,71 +41,25 @@ const generateRandomNumber = (mine, size, clickCell) => {
       ALL_MINE_LOC.push([LINE, CELL]);
     }
     else {
-      if(!(checkArrayInMatrix(ALL_MINE_LOC, [LINE, CELL]))) {
-        ALL_MINE_LOC.push([LINE, CELL]);
+
+      if((ALL_MINE_LOC.some((coord) => coord[0] === CLICK_CELL[0] && coord[1] === CLICK_CELL[1]))) {
+        const index = ALL_MINE_LOC.findIndex((coord) => coord[0] === CLICK_CELL[0] && coord[1] === CLICK_CELL[1]);
+        ALL_MINE_LOC.splice(index, 1);
+        // allMine--;
+        // console.log(allMine)
+      } else if ((ALL_MINE_LOC.some((coord) => coord[0] === LINE && coord[1] === CELL))){
+        const index = ALL_MINE_LOC.findIndex((coord) => coord[0] === LINE && coord[1] === CELL);
+        ALL_MINE_LOC.splice(index, 1);
+        // allMine--;
       } else {
-        console.log(`${LINE},${CELL}Совпадение`)
+        ALL_MINE_LOC.push([LINE, CELL]);
       }
-
-
-
     }
   }
-  // console.log(ALL_MINE_LOC)
-
-    // if(ALL_MINE_LOC.length === 0) {
-    //   ALL_MINE_LOC.push([LINE, CELL]);
-    // }
-
-    // if(ALL_MINE_LOC.length !== 0) {
-
-    //   // for(const row of ALL_MINE_LOC) {
-    //   //   const MINE_LOC_CURRENT = [LINE, CELL];
-
-    //   //   if(!(row.every((value, index)=> value === MINE_LOC_CURRENT[index]))) {
-
-    //   //     ALL_MINE_LOC.push([LINE, CELL]);
-    //   //   }
-    //   // }
-    // }
-
-
-
-
-
-
-
-
-
-
-      // MINE_LOC.push([LINE, CELL]);
-
-
-
-
-
-    // const LINE = Math.floor(Math.random() * size) + 1;
-    // const CELL = Math.floor(Math.random() * size) + 1;
-
-    // MINE_LOC.forEach((value) => {
-    //   if(!(value.line === LINE && value.cell === CELL)) {
-    //     return {'line': LINE, 'cell': CELL};
-    //   }
-    //   else {
-    //     // console.log({'line': LINE, 'cell': CELL});
-    //     // console.log(value);
-    //   }
-    // });
-
-    // MINE_LOC.set(i,{'line': LINE, 'cell': CELL});
-
-
-
 
 
   return ALL_MINE_LOC;
-  // return  MINE_LOC;
 };
 
 
-export {getGenerateDubleArray, generateRandomNumber};
+export {getGenerateDubleArray, generateRandomNumber, changeToNumber};
