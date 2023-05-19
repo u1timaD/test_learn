@@ -16,6 +16,7 @@ const getGenerateDubleArray = (GAME_FIELD) => {
 // !Проверка есть ли массив в двумерном массиве
 const checkArray = (dubleArray, array) => dubleArray.some((index) => index[0] === array[0] && index[1] === array[1]);
 
+
 // ! Меняем координату из 2-3 в [2,3]
 const changeToNumber = (click) => {
 
@@ -28,39 +29,26 @@ const changeToNumber = (click) => {
 
 const generateRandomNumber = (mine, size, clickCell) => {
 
-  const CLICK_CELL = changeToNumber(clickCell);
+  const CLICK_CELL = clickCell;
   const ALL_MINE_LOC = [];
-  // let allMine = mine;
 
+  // ALL_MINE_LOC.push(CLICK_CELL);
 
   for (let i = 1; ALL_MINE_LOC.length <= mine-1  ; i++ ) {
     const LINE = Math.floor(Math.random() * size) + 1;
     const CELL = Math.floor(Math.random() * size) + 1;
-
+    let cellLocate = [LINE, CELL];
     // TODO: Не исключает из массива тех числе что уже есть
     // !ИСПРАВИТЬ
-    if(ALL_MINE_LOC.length === 0) {
-      ALL_MINE_LOC.push([LINE, CELL]);
-    }
-    else {
 
-      // !ЗАМЕНИТЬ НА ФУНКЦИЮ В ПРОВЕРКЕ. (Всё равно не исключает уже ту бомбу что есть)
-      if((ALL_MINE_LOC.some((coord) => coord[0] === CLICK_CELL[0] && coord[1] === CLICK_CELL[1]))) {
-        const index = ALL_MINE_LOC.findIndex((coord) => coord[0] === CLICK_CELL[0] && coord[1] === CLICK_CELL[1]);
-        ALL_MINE_LOC.splice(index, 1);
-        // allMine--;
-        // console.log(allMine)
-      } else if ((ALL_MINE_LOC.some((coord) => coord[0] === LINE && coord[1] === CELL))){
-        const index = ALL_MINE_LOC.findIndex((coord) => coord[0] === LINE && coord[1] === CELL);
-        ALL_MINE_LOC.splice(index, 1);
-        // allMine--;
-      } else {
-        ALL_MINE_LOC.push([LINE, CELL]);
-      }
+    //! если Масив Не нажатая точка
+    if( !(CLICK_CELL[0] === LINE && CLICK_CELL[1] === CELL) && !checkArray(ALL_MINE_LOC, cellLocate)) {
+      ALL_MINE_LOC.push(cellLocate);
     }
+
   }
 
-
+  // console.log(ALL_MINE_LOC)
   return ALL_MINE_LOC;
 };
 

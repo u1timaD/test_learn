@@ -1,10 +1,12 @@
 import { getGenerateDubleArray, generateRandomNumber, changeToNumber, checkArray} from './util.js';
 
 // !Заменить на запрос из input
-const QUANTITY_MINE = 10;
+const QUANTITY_MINE = 89;
 // !Заменить на выбор с кнопок после 10\15\25 клеток
 const FIELD_SIZE = 10;
 let fieldClick = 0;
+let leftClickCount = 0;
+
 const FILED_ARRAY = getGenerateDubleArray(FIELD_SIZE);
 
 let MINE_LOCATION;
@@ -15,13 +17,16 @@ const CONTAINER = document.createElement('div');
 
 const BTN = document.createElement('button');
 BTN.classList = 'btn';
-BTN.textContent = 'Кнопка';
+BTN.textContent = 'Кнопка НОВАЯ ИГРА';
 BODY.prepend(CONTAINER);
 BODY.prepend(BTN)
 
 const POPUP = document.createElement('div');
 POPUP.classList = 'popup';
 POPUP.textContent = 'Игра окончена'
+
+const POPUP_WIN = document.createElement('div');
+POPUP_WIN.classList = 'popup';
 
 
 
@@ -38,7 +43,7 @@ for(let i = 1; i <= FIELD_SIZE; i++) {
     const CELL_BOX = document.createElement('div');
     const CELL = document.createElement('div');
     CELL_BOX.classList = 'cell-box';
-    CELL.classList = 'cell';
+    CELL.classList = 'cell cell-shadow';
     CELL.setAttribute('data-cell-number', `${i}-${j}`)
     LINE.append(CELL_BOX);
     CELL_BOX.append(CELL);
@@ -47,16 +52,7 @@ for(let i = 1; i <= FIELD_SIZE; i++) {
 }
 
 
-
-
-
-// ! Расставляет мин по полю, сделать так чтобы только после нажатия первой клетки
-// TODO: Добавить по другому мины, не через класс
-
-
-
-// TODO: Приходит двумерный массив из строк, их к строке дата селл
-// TODO: И всё.
+// ! Добавляем картинку мины
 const generateMine = (mineLocation) => {
   for(const mine of mineLocation) {
     const MINE_LINE = mine[0];
@@ -67,14 +63,12 @@ const generateMine = (mineLocation) => {
 }
 
 
-
-// ! Добавление цифр вокруг бомб, исключая бомб
+// ! Добавление цифр в через текст контент
 const countNumberAroundCell = (location) => {
   const LINE = location[0];
   const CELL = location[1];
 
   const numberCell = document.querySelector(`[data-cell-number="${LINE}-${CELL}"]`);
-  numberCell.style.backgroundColor = 'red';
 
   const currentValue = parseInt(numberCell.textContent); // Получаем текущее значение и преобразуем его в число
 
@@ -87,18 +81,8 @@ const countNumberAroundCell = (location) => {
   }
 }
 
-// ! Проверка Содержаться ли координаты в двумерном массиве
-const isContainedInArray = (location, arr) => {
-  for (let i = 0; i < arr.length; i++) {
-    const [x, y] = arr[i];
-    if (x === location[0] && y === location[1]) {
-      return true;
-    }
-  }
-  return false;
-}
 
-// ! Поиск области вокруг бомб
+// ! Поиск области вокруг бомб для цифр
 const findCellAroundMine = (value, arr) => {
   const MINE_LINE = value[0];
   const MINE_CELL = value[1];
@@ -112,7 +96,7 @@ const findCellAroundMine = (value, arr) => {
         j !== 0 &&
         i !== FIELD_SIZE + 1 &&
         j !== FIELD_SIZE + 1 &&
-        !isContainedInArray(location, arr)
+        !checkArray(arr, location)
       ) {
         countNumberAroundCell(location);
       }
@@ -121,10 +105,10 @@ const findCellAroundMine = (value, arr) => {
 }
 
 
-const setNumberAround = () => {
-  MINE_LOCATION.forEach((value, index, arr) => {
-    findCellAroundMine(value, arr)
-    // console.log(value, index)
+// !Установка цирф вокгур мин
+const setNumberAround = (mine) => {
+  mine.forEach((value, index, arr) => {
+    findCellAroundMine(value, arr);
   })
 }
 
@@ -132,29 +116,24 @@ const setNumberAround = () => {
 // ! Массив открытых ячеек
 let openedCells = [];
 
-const checkEmptyCell = (loc, centerCell) => {
+// ! Массив ячеек с флагами
+let flagCollection = [];
+
+const checkEmptyCell = (loc) => {
 let selectCells = loc;
 
   for(const cell of selectCells) {
     const numberCell = document.querySelector(`[data-cell-number="${cell[0]}-${cell[1]}"]`);
+
     if (numberCell.textContent.length === 0 && !checkArray(openedCells, cell)) {
       openedCells.push(cell);
       findEmptyCellAround(cell);
 
     } else {
       numberCell.style.backgroundColor = 'orange';
+      numberCell.classList.remove('cell-shadow');
     }
   }
-
-// ! Открыли квадраты по периметру
-// TODO: Сделать функцию открытия
-
-// !Далее смотри, если ячейка пустая заходим в неё и опять открываем все в радиусе
-
-  // !Если чейка НЕ ПУСТАЯ, то проверяем все ячейки вокруг (добавляем все ячейки в массив)
- // ! Если хотя бы одна ячейка в окружении есть пустая, то проходим для каждой ячейки всё ещё раз.
- // ! В противном случае выходим и нчего не делаем
-
 }
 
 
@@ -162,7 +141,7 @@ const findEmptyCellAround = (value) => {
   const MINE_LINE = value[0];
   const MINE_CELL = value[1];
   const CENTER_CELL = [MINE_LINE, MINE_CELL];
-  const selectCells = []
+  const selectCells = [];
 
   for(let i=MINE_LINE-1; i<=MINE_LINE+1; i++) {
     for(let j=MINE_CELL-1; j<=MINE_CELL+1; j++) {
@@ -172,53 +151,142 @@ const findEmptyCellAround = (value) => {
         i !== 0 &&
         j !== 0 &&
         i !== FIELD_SIZE + 1 &&
-        j !== FIELD_SIZE + 1
+        j !== FIELD_SIZE + 1 &&
+        !checkArray(flagCollection, location)
       ) {
-        selectCells.push(location)
+        selectCells.push(location);
       }
     }
   }
   checkEmptyCell(selectCells, CENTER_CELL);
 }
 
+// ! Открыаем всё поле при выигрыше / пройгрыше
+const openAllmines = (arr) => {
+  for(const item of arr) {
+    item.classList.remove('cell-shadow');
+  }
+}
 
+// !Проверяет слова Ход ХОДА
+const updateNamesWithMoves = (value) => {
+  const valueString = value.toString();
+  let matches;
+  const regexOne = /\b\d*1\b/g;
+  const regexTwo = /\b\d+[234]\b/g;
+
+  if(regexTwo.test(valueString)) {
+    matches = valueString.replaceAll(regexTwo, `${valueString} хода`);
+  } else if (regexOne.test(valueString)) {
+    matches = valueString.replaceAll(regexOne, `${valueString} ход`);
+  } else {
+    matches = `${valueString} ходов`;
+  }
+ return matches;
+}
+
+updateNamesWithMoves(leftClickCount)
 
 const renderField = (evt) => {
+  const CHECK_CELL = evt.target;
   const CLICK_CELL = evt.target.getAttribute('data-cell-number');
   const changeClickToArray = changeToNumber(CLICK_CELL);
+  leftClickCount++;
 
 
-  // ! Самое первое нажатие
-  if (!fieldClick) {
-    fieldClick = 1;
-    MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE, CLICK_CELL);
-    setNumberAround(generateMine(MINE_LOCATION));
+
+  // ! Проверка на наличие флага в клетке
+
+  if(!(CHECK_CELL.classList.contains('cell-flag'))) {
+
+      // ! Самое первое нажатие
+    if (!fieldClick) {
+      fieldClick = 1;
+      MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE, changeClickToArray);
+      generateMine(MINE_LOCATION);
+      setNumberAround(MINE_LOCATION);
+    }
+
+    // ! Проверка если ткнул в пусое поле
+    if (evt.target.textContent.length === 0 && !checkArray(MINE_LOCATION, changeClickToArray)) {
+      const clickLocation = changeToNumber(CLICK_CELL);
+      findEmptyCellAround(clickLocation);
+    }
+
+    else if (evt.target.textContent.length !== 0 && !checkArray(MINE_LOCATION, changeClickToArray)) {
+
+      evt.target.style.backgroundColor = 'orange';
+      evt.target.classList.remove('cell-shadow');
+
+      console.log('Попал в цифру');
+
+
+      const shadow = document.querySelectorAll('.cell-shadow');
+
+      // ! Попап для победы
+      // TODO: Дополнить временем и количество кликов
+      if (shadow.length === QUANTITY_MINE) {
+        POPUP_WIN.textContent = `Ура! Вы нашли все мины за  секунд и ${updateNamesWithMoves(leftClickCount)}!`;
+        BODY.append(POPUP_WIN);
+        openAllmines(shadow);
+      }
+
+    } else {
+      console.log('Попал в бомбу')
+
+      // ! Попап для пройгрыша
+      const CELL = document.querySelectorAll('.cell');
+      openAllmines(CELL);
+      BODY.append(POPUP);
+    }
   }
+}
 
-  // ! Проверка если ткнул в пусое поле
-  if (evt.target.textContent.length === 0 && !checkArray(MINE_LOCATION, changeClickToArray)) {
-    const clickLocation = changeToNumber(CLICK_CELL);
-    findEmptyCellAround(clickLocation);
-  }
 
-  else if (evt.target.textContent.length !== 0 && !checkArray(MINE_LOCATION, changeClickToArray)) {
+// ! Правая кнопка с флагом
+const flagRender = (evt) => {
+  evt.preventDefault();
 
-    evt.target.style.backgroundColor = 'orange';
+  const CLICK_CELL = evt.target.getAttribute('data-cell-number');
+  const changeClickToArray = changeToNumber(CLICK_CELL);
+  const clickCell = evt.target;
 
-    console.log('Попал в цифру');
+  if(clickCell.classList.contains('cell-shadow')) {
 
-  } else {
-    console.log('Попал в бомбу')
-    BODY.append(POPUP);
+    if(checkArray(flagCollection, changeClickToArray)) {
+      const index = flagCollection.findIndex((item) => item[0] === changeClickToArray[0] && item[1] === changeClickToArray[1]);
+      flagCollection.splice(index, 1);
+    }
+    else {
+      flagCollection.push(changeClickToArray);
+    }
+    console.log('Может ставить флаг');
+    clickCell.classList.toggle('cell-flag');
+    console.log(flagCollection)
   }
 }
 
 CONTAINER.addEventListener('click', renderField);
+CONTAINER.addEventListener('contextmenu', flagRender);
 
 
+// ! Рестарт игры
 const btnClick = (evt) => {
+
+//   const cellShadow = document.querySelectorAll('.cell-shadow');
+//   for(const item of cellShadow) {
+//     if(item.classList.contains('cell-shadow')) {
+
+//     }
+//     else {
+//       item.classList.remove('cell-shadow');
+//     }
+
+// }
+
   generateMine(MINE_LOCATION);
   setNumberAround();
 }
 
 const btnStart = BTN.addEventListener('click', btnClick);
+
