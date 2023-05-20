@@ -32,8 +32,6 @@ const generateRandomNumber = (mine, size, clickCell) => {
   const CLICK_CELL = clickCell;
   const ALL_MINE_LOC = [];
 
-  // ALL_MINE_LOC.push(CLICK_CELL);
-
   for (let i = 1; ALL_MINE_LOC.length <= mine-1  ; i++ ) {
     const LINE = Math.floor(Math.random() * size) + 1;
     const CELL = Math.floor(Math.random() * size) + 1;
@@ -45,10 +43,8 @@ const generateRandomNumber = (mine, size, clickCell) => {
     if( !(CLICK_CELL[0] === LINE && CLICK_CELL[1] === CELL) && !checkArray(ALL_MINE_LOC, cellLocate)) {
       ALL_MINE_LOC.push(cellLocate);
     }
-
   }
 
-  // console.log(ALL_MINE_LOC)
   return ALL_MINE_LOC;
 };
 
