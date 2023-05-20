@@ -22,6 +22,11 @@ body {
 
 .cell-box {
   position: relative;
+  width: 30px;
+  height: 30px;
+  border: 1px black solid;
+  cursor: pointer;
+  background-color: bisque;
 }
 
 .cell {
@@ -30,10 +35,29 @@ body {
   justify-content: center;
   width: 30px;
   height: 30px;
-  background-color: bisque;
-  border: 1px black solid;
-  cursor: pointer;
+}
 
+.cell-shadow::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background-color: blue;
+
+  /*! ТУТ ПОМЕНЯТЬ НА +3 */
+  z-index: 3;
+}
+
+.cell-flag::after {
+  position: absolute;
+  content: url('./minesweeper/flag.png');
+  top: 0;
+  width: 30px;
+  height: 30px;
+
+  /*! ТУТ ПОМЕНЯТЬ НА +5 */
+  z-index: 5;
 }
 
 .cell-active {
@@ -59,25 +83,60 @@ body {
   color: wheat;
 }
 
-
-.shadow {
-  position: absolute;
-  content: '';
-  width: 80px;
-  height: 50px;
-  background-color: blue;
-  z-index: 3;
-}
-
 .popup {
   position: absolute;
   content: '';
-  width: 200px;
+  width: 500px;
   height: 200px;
-  top: 50%;
+  top: 50px;
   left: 50%;
-  color: blue;
+  color: purple;
   font-size: 76px;
   background-color: brown;
   transform: translate(-50%);
+  z-index: 5;
+}
+
+.cell-box--shadow {
+
+}
+
+.level-box {
+  background-color: aquamarine;
+  width: 500px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.level-btn {
+  font: 700 normal 20px/1.5 'Courier New', Courier, monospace;;
+  border: 2px solid black;
+  background-color: blueviolet;
+  cursor: pointer;
+  transition: all .2s;
+}
+.start-btn {
+  font: 700 normal 20px/1.5 'Courier New', Courier, monospace;;
+  border: 2px solid black;
+  background-color: blueviolet;
+  cursor: pointer;
+  transition: all .2s;
+  flex: 1;
+}
+
+.level-btn:active {
+  transform: scale(0.9)
+}
+
+
+[data-level='easy'] {
+  background-color: green;
+}
+[data-level='mid'] {
+background-color: yellow;
+}
+[data-level='hard'] {
+  background-color: brown;
 }
