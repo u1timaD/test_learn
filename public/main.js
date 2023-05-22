@@ -1,12 +1,17 @@
 import { getGenerateDubleArray, generateRandomNumber, changeToNumber, checkArray} from './util.js';
 import { NUMBER_COLORS, LEVELS } from './data.js';
+import { changeShadowLayout } from './layout.js';
+import { startTimer, stopTimer } from './timer.js';
+
 
 // !Заменить на запрос из input
-const QUANTITY_MINE = 10;
+let QUANTITY_MINE = 10;
 // !Заменить на выбор с кнопок после 10\15\25 клеток
 let FIELD_SIZE = 10;
 let fieldClick = 0;
 let leftClickCount = 0;
+let flagCout = 0;
+
 
 
 const FILED_ARRAY = getGenerateDubleArray(FIELD_SIZE);
@@ -14,25 +19,46 @@ const FILED_ARRAY = getGenerateDubleArray(FIELD_SIZE);
 let MINE_LOCATION;
 
 
-const getCreateElement = () => document.createElement('div');
-
-
-
 const BODY = document.querySelector('.body');
+const MAIN_SECTION = document.createElement('section');
+MAIN_SECTION.classList = 'main-section';
+const MAIN_BOX = document.createElement('div');
+MAIN_BOX.classList = 'main-box';
 const CONTAINER = document.createElement('div');
 
-const BTN = document.createElement('button');
-BTN.classList = 'btn';
-BTN.textContent = 'Кнопка НОВАЯ ИГРА';
-BODY.prepend(CONTAINER);
-BODY.prepend(BTN)
+const MAIN_BTN = document.createElement('div');
+MAIN_BTN.classList = 'main-btn';
+
+const NEW_GAME = document.createElement('div');
+NEW_GAME.classList = 'new-game-btn';
+const NEW_GAME_TEXT = document.createElement('span');
+NEW_GAME_TEXT.classList = 'new-game-text';
+NEW_GAME_TEXT.textContent = 'New Game';
+NEW_GAME.append(NEW_GAME_TEXT);
+
+const SETTING_GAME = document.createElement('div');
+SETTING_GAME.classList = 'setting-game-btn';
+const SETTING_GAME_TEXT = document.createElement('span');
+SETTING_GAME_TEXT.classList = 'setting-game-text';
+SETTING_GAME_TEXT.textContent = 'Settings';
+SETTING_GAME.append(SETTING_GAME_TEXT);
+
+
+MAIN_SECTION.prepend(MAIN_BOX);
+MAIN_BTN.prepend(NEW_GAME);
+MAIN_BTN.prepend(SETTING_GAME);
+MAIN_BOX.prepend(CONTAINER);
+MAIN_BOX.prepend(MAIN_BTN);
+
+BODY.prepend(MAIN_SECTION);
+
 
 const POPUP = document.createElement('div');
-POPUP.classList = 'popup';
-POPUP.textContent = 'Игра окончена'
-
-const POPUP_WIN = document.createElement('div');
-POPUP_WIN.classList = 'popup';
+POPUP.classList = 'popup popup-disable';
+const POPUP_TEXT = document.createElement('span');
+POPUP_TEXT.classList = 'popup-text';
+POPUP.prepend(POPUP_TEXT);
+BODY.prepend(POPUP);
 
 
 // !Рисуем Кнопки сложности
@@ -50,63 +76,159 @@ const HARD = document.createElement('div');
 HARD.classList = 'level-btn';
 HARD.dataset.level = 'hard';
 HARD.textContent = '25x25';
-const START = document.createElement('div');
-START.classList = 'start-btn';
-START.dataset.level = 'start';
-START.textContent = 'START';
+
+LEVEL_BTN_BOX.append(EASY, MID, HARD);
+
+
+// Создание элементов
+const section = document.createElement('section');
+section.className = 'setting setting-hidden';
+
+const divContainer = document.createElement('div');
+divContainer.className = 'setting-container';
+
+const divHeader = document.createElement('div');
+divHeader.className = 'setting-header';
+
+const h2Title = document.createElement('h2');
+h2Title.className = 'setting-title';
+h2Title.textContent = 'Settings';
+
+const divMenu = document.createElement('div');
+divMenu.className = 'setting-menu';
+
+const labelMines = document.createElement('label');
+labelMines.className = 'title-fields';
+labelMines.setAttribute('for', 'mines');
+labelMines.textContent = 'Mines';
+
+
+const inputMines = document.createElement('input');
+inputMines.className = 'mines';
+inputMines.setAttribute('id', 'mines');
+inputMines.setAttribute('type', 'number');
+inputMines.setAttribute('min', '10');
+inputMines.setAttribute('max', '99');
+
+
+const spanMines = document.createElement('span');
+spanMines.className = 'error-text';
+spanMines.textContent = 'A number from 10 to 99';
+
+const fieldTitle = document.createElement('h3');
+fieldTitle.className = 'field-size-title';
+fieldTitle.textContent = 'Field Size';
+
+// ! Тема
+const labelTheme = document.createElement('label');
+labelTheme.className = 'switch';
+const switchInput = document.createElement('input');
+switchInput.className = 'switch-input';
+switchInput.type = 'checkbox';
+switchInput.id = 'themeSwitch';
+const switchSpan = document.createElement('span');
+switchSpan.className = 'slider';
+const switchTitle = document.createElement('h3');
+switchTitle.className = 'switch-title';
+switchTitle.textContent = 'Theme toggle';
+labelTheme.append(switchInput);
+labelTheme.append(switchSpan);
+labelTheme.prepend(switchTitle);
+
+const divBtns = document.createElement('div');
+divBtns.className = 'setting-btns';
+
+const btnSave = document.createElement('button');
+btnSave.className = 'setting-btn save';
+
+const spanSave = document.createElement('span');
+spanSave.className = 'setting-text';
+spanSave.textContent = 'save';
+
+const btnExit = document.createElement('button');
+btnExit.className = 'setting-btn exit';
+
+const spanExit = document.createElement('span');
+spanExit.className = 'setting-text';
+spanExit.textContent = 'exit';
+
+
+// !Клики, Таймер и флаги
+const COUNT_BOX = document.createElement('div');
+COUNT_BOX.classList = 'count-box';
+
+const CLICK_COUNT_BOX = document.createElement('div');
+CLICK_COUNT_BOX.classList = 'click-count-box';
+const CLICK_COUNT_TITLE = document.createElement('span');
+CLICK_COUNT_TITLE.classList = 'click-count-title';
+CLICK_COUNT_TITLE.textContent = 'Clicks:';
+
+const CLICK_COUNT = document.createElement('span');
+CLICK_COUNT.classList = 'click-count';
+CLICK_COUNT.textContent = `${leftClickCount}`;
+CLICK_COUNT_BOX.append(CLICK_COUNT_TITLE);
+CLICK_COUNT_BOX.append(CLICK_COUNT);
+
+const TIME_COUNT_BOX = document.createElement('div');
+TIME_COUNT_BOX.classList = 'time-count-box';
+const TIME_COUNT_TITLE = document.createElement('span');
+TIME_COUNT_TITLE.classList = 'time-count-title';
+TIME_COUNT_TITLE.textContent = 'Time:';
+
+const TIME_COUNT = document.createElement('span');
+TIME_COUNT.classList = 'time-count';
+TIME_COUNT.textContent = '00:00';
+TIME_COUNT_BOX.append(TIME_COUNT_TITLE);
+TIME_COUNT_BOX.append(TIME_COUNT);
+
+const FLAG_COUNT_BOX = document.createElement('div');
+FLAG_COUNT_BOX.classList = 'flag-count-box';
+const FLAG_COUNT_TITLE = document.createElement('span');
+FLAG_COUNT_TITLE.classList = 'flag-count-title';
+FLAG_COUNT_TITLE.textContent = 'Flags:';
+
+const FLAG_COUNT = document.createElement('span');
+FLAG_COUNT.classList = 'flag-count';
+FLAG_COUNT.textContent = `${flagCout}`;
+FLAG_COUNT_BOX.append(FLAG_COUNT_TITLE);
+FLAG_COUNT_BOX.append(FLAG_COUNT);
+
+COUNT_BOX.append(CLICK_COUNT_BOX);
+COUNT_BOX.append(FLAG_COUNT_BOX);
+COUNT_BOX.append(TIME_COUNT_BOX);
+
+MAIN_BOX.append(COUNT_BOX);
 
 
 
-LEVEL_BTN_BOX.append(EASY, MID, HARD, START);
-BODY.prepend(LEVEL_BTN_BOX);
 
 
-// ! Через DIV
-// const numberField = document.createElement('div');
-// numberField.contentEditable = true; // Позволяет редактировать содержимое
+// Структурирование элементов
+divHeader.appendChild(h2Title);
 
-// numberField.addEventListener('input', function() {
-//   const enteredValue = numberField.textContent.trim(); // Удаляем пробелы в начале и конце
-//   const numberPattern = /^\d{2}$/; // Регулярное выражение для двузначного числа
+divMenu.appendChild(labelMines);
+divMenu.appendChild(inputMines);
+inputMines.after(spanMines);
 
-//   if (numberPattern.test(enteredValue)) {
-//     const enteredNumber = parseInt(enteredValue);
-//     if (enteredNumber >= 10 && enteredNumber <= 99) {
-//       console.log('Введено число:', enteredNumber);
-//     } else {
-//       console.log('Число должно быть от 10 до 99');
-//     }
-//   } else {
-//     console.log('Некорректный ввод');
-//   }
-// });
+divMenu.appendChild(LEVEL_BTN_BOX);
+LEVEL_BTN_BOX.before(fieldTitle);
+//!Тема
+divMenu.appendChild(labelTheme);
 
+divBtns.appendChild(btnSave);
+btnSave.appendChild(spanSave);
 
-// Добавляем поле для ввода числа на страницу
-// BODY.prepend(numberField);
+divBtns.appendChild(btnExit);
+btnExit.appendChild(spanExit);
 
+divContainer.appendChild(divHeader);
+divContainer.appendChild(divMenu);
+divContainer.appendChild(divBtns);
 
-// ! Через INPUT
-const numberInput = document.createElement('input');
-numberInput.type = 'number';
+section.appendChild(divContainer);
 
-// Устанавливаем атрибуты min и max для ограничения диапазона
-numberInput.min = 10;
-numberInput.max = 99;
-
-numberInput.addEventListener('input', function() {
-  const enteredValue = parseInt(numberInput.value);
-
-  if (isNaN(enteredValue) || enteredValue < 10 || enteredValue > 99) {
-    // Если введено некорректное значение, очищаем поле ввода
-    numberInput.value = '';
-  }
-});
-
-// Добавляем поле ввода на страницу
-BODY.prepend(numberInput);
-
-
+// Добавление в документ
+BODY.prepend(section);
 
 
 // ! Переделать на классы
@@ -119,7 +241,7 @@ const createField = () => {
     const LINE = document.createElement('div');
     CONTAINER.classList = 'container';
     LINE.classList = 'line';
-    LINE.setAttribute('data-line-number', `${i}`)
+    LINE.setAttribute('data-line-number', `${i}`);
 
     for(let j = 1; j <= FIELD_SIZE; j++) {
       const CELL_BOX = document.createElement('div');
@@ -134,8 +256,8 @@ const createField = () => {
     }
     CONTAINER.append(LINE);
   }
-}
-createField()
+};
+createField();
 
 
 // ! Добавляем картинку мины
@@ -146,7 +268,7 @@ const generateMine = (mineLocation) => {
     const mineInCell = document.querySelector(`[data-cell-number="${MINE_LINE}-${MINE_CELL}"]`);
     mineInCell.classList.add('cell-picture');
   }
-}
+};
 
 
 // ! Добавление цифр в через текст контент
@@ -167,12 +289,12 @@ const countNumberAroundCell = (location) => {
     // Проверяем, есть ли цвет для текущего значения в объекте
     const color = NUMBER_COLORS.hasOwnProperty(currentValue) ? NUMBER_COLORS[currentValue] : '#0000FF'; // По умолчанию: Синий
     numberCell.style.color = color;
-    } else {
+  } else {
     // Если текущее значение NaN (не число), то устанавливаем значение 1 и цвет красный
     numberCell.textContent = 1;
     numberCell.style.color = '#0000FF';
-    }
-}
+  }
+};
 
 
 // ! Поиск области вокруг бомб для цифр
@@ -195,15 +317,15 @@ const findCellAroundMine = (value, arr) => {
       }
     }
   }
-}
+};
 
 
 // !Установка цирф вокгур мин
 const setNumberAround = (mine) => {
   mine.forEach((value, index, arr) => {
     findCellAroundMine(value, arr);
-  })
-}
+  });
+};
 
 
 // ! Массив открытых ячеек
@@ -213,7 +335,7 @@ let openedCells = [];
 let flagCollection = [];
 
 const checkEmptyCell = (loc) => {
-let selectCells = loc;
+  const selectCells = loc;
 
   for(const cell of selectCells) {
     const numberCell = document.querySelector(`[data-cell-number="${cell[0]}-${cell[1]}"]`);
@@ -227,7 +349,7 @@ let selectCells = loc;
       numberCell.classList.remove('cell-shadow');
     }
   }
-}
+};
 
 
 const findEmptyCellAround = (value) => {
@@ -252,14 +374,14 @@ const findEmptyCellAround = (value) => {
     }
   }
   checkEmptyCell(selectCells, CENTER_CELL);
-}
+};
 
 // ! Открыаем всё поле при выигрыше / пройгрыше
 const openAllmines = (arr) => {
   for(const item of arr) {
     item.classList.remove('cell-shadow');
   }
-}
+};
 
 // !Проверяет слова Ход ХОДА
 const updateNamesWithMoves = (value) => {
@@ -275,51 +397,104 @@ const updateNamesWithMoves = (value) => {
   } else {
     matches = `${valueString} ходов`;
   }
- return matches;
-}
+  return matches;
+};
 
-updateNamesWithMoves(leftClickCount)
+updateNamesWithMoves(leftClickCount);
 
 
+let settingFieldSize = 10;
 
 // ! Установка уровня игры
 const chooseGameDifficulty = (evt) => {
   if (evt.target !== LEVEL_BTN_BOX) {
-    evt.stopPropagation()
+    evt.stopPropagation();
     const btn = evt.target.dataset.level;
 
-    if(FIELD_SIZE !== LEVELS[btn] && btn !== 'start') {
-      FIELD_SIZE = LEVELS[btn];
-      restartGame();
+    if(FIELD_SIZE !== LEVELS[btn]) {
+      settingFieldSize = LEVELS[btn];
+
+      // restartGame();
     }
   }
-}
+};
 
 LEVEL_BTN_BOX.addEventListener('click', chooseGameDifficulty);
 
+// ! Проверка количества мин
+const saveSettingTheGame = (evt) => {
+  FIELD_SIZE = settingFieldSize;
+  const mines = document.querySelector('input');
+  const errorText = document.querySelector('.error-text');
+  const minesValue = mines.value;
+
+  if (minesValue < 10 || minesValue > 99) {
+    errorText.style.display = 'block';
+  } else {
+    QUANTITY_MINE = minesValue;
+    errorText.style.display = 'none';
+  }
+};
+
+const exitSettingTheGame = (evt) => {
+  TIME_COUNT.textContent = '00:00';
+  stopTimer()
+  changeShadowLayout();
+  const setting = document.querySelector('.setting');
+  setting.classList.add('setting-hidden');
+  restartGame();
+};
+
+const clickSettingBtn = (evt) => {
+  const setting = document.querySelector('.setting');
+  setting.classList.remove('setting-hidden');
+  POPUP.classList.add('popup-disable');
+  BODY.classList.add('shadow');
+  BODY.classList.add('scroll-lock');
+  // changeShadowLayout();
+};
 
 
+const SAVE = document.querySelector('.save');
+const EXIT = document.querySelector('.exit');
+const settingGameBtn = document.querySelector('.setting-game-btn');
 
+SAVE.addEventListener('click', saveSettingTheGame);
+EXIT.addEventListener('click', exitSettingTheGame);
+settingGameBtn.addEventListener('click', clickSettingBtn);
+
+
+const cloneMainBtn = MAIN_BTN.cloneNode(true);
+const cloneSettingGameBtn = cloneMainBtn.querySelector('.setting-game-btn');
+const cloneNewGameBtn = cloneMainBtn.querySelector('.new-game-btn');
+
+cloneSettingGameBtn.addEventListener('click', clickSettingBtn);
 
 
 const renderField = (evt) => {
-
   if (evt.target !== CONTAINER) {
-    evt.stopPropagation()
+    evt.stopPropagation();
 
     const CHECK_CELL = evt.target;
     const CLICK_CELL = evt.target.getAttribute('data-cell-number');
     const changeClickToArray = changeToNumber(CLICK_CELL);
-    leftClickCount++;
+
+    // !Подсчёт количества кликов
+    if(CHECK_CELL.classList.contains('cell-shadow') && !(CHECK_CELL.classList.contains('cell-flag'))) {
+      leftClickCount++;
+      CLICK_COUNT.textContent = `${leftClickCount}`;
+    }
 
     // ! Проверка на наличие флага в клетке
     if(!(CHECK_CELL.classList.contains('cell-flag'))) {
-        // ! Самое первое нажатие
+
+      // ! Самое первое нажатие
       if (!fieldClick) {
         fieldClick = 1;
         MINE_LOCATION = generateRandomNumber(QUANTITY_MINE, FIELD_SIZE, changeClickToArray);
         generateMine(MINE_LOCATION);
         setNumberAround(MINE_LOCATION);
+        startTimer();
       }
 
       // ! Проверка если ткнул в пусое поле
@@ -333,30 +508,41 @@ const renderField = (evt) => {
         evt.target.style.backgroundColor = 'orange';
         evt.target.classList.remove('cell-shadow');
 
-        console.log('Попал в цифру');
-
 
         const shadow = document.querySelectorAll('.cell-shadow');
-
         // ! Попап для победы
         // TODO: Дополнить временем и количество кликов
-        if (shadow.length === QUANTITY_MINE) {
-          POPUP_WIN.textContent = `Ура! Вы нашли все мины за  секунд и ${updateNamesWithMoves(leftClickCount)}!`;
-          BODY.append(POPUP_WIN);
+
+        if (+shadow.length === +QUANTITY_MINE) {
+
+          // POPUP_WIN.textContent = `Ура! Вы нашли все мины за  секунд и ${updateNamesWithMoves(leftClickCount)}!`;
+          POPUP_TEXT.textContent =  `Ура! Вы нашли все мины за ${TIME_COUNT.textContent} секунд и ${leftClickCount} ходов!`;
           openAllmines(shadow);
+          POPUP.classList.remove('popup-disable');
+          POPUP.append(cloneMainBtn);
+          changeShadowLayout();
+          stopTimer();
+
         }
 
       } else {
-        console.log('Попал в бомбу')
+        console.log('Попал в бомбу');
 
         // ! Попап для пройгрыша
         const CELL = document.querySelectorAll('.cell');
+        POPUP_TEXT.textContent =  'Игра окончена. Попробуйте еще раз';
         openAllmines(CELL);
-        BODY.append(POPUP);
+        POPUP.classList.remove('popup-disable');
+        POPUP.append(cloneMainBtn);
+        changeShadowLayout();
+        stopTimer();
+
+
       }
     }
+
   }
-}
+};
 
 
 // ! Правая кнопка с флагом
@@ -372,15 +558,17 @@ const flagRender = (evt) => {
     if(checkArray(flagCollection, changeClickToArray)) {
       const index = flagCollection.findIndex((item) => item[0] === changeClickToArray[0] && item[1] === changeClickToArray[1]);
       flagCollection.splice(index, 1);
-    }
-    else {
+      flagCout--;
+      FLAG_COUNT.textContent = `${flagCout}`;
+
+    } else {
       flagCollection.push(changeClickToArray);
+      flagCout++;
+      FLAG_COUNT.textContent = `${flagCout}`;
     }
-    console.log('Может ставить флаг');
     clickCell.classList.toggle('cell-flag');
-    console.log(flagCollection)
   }
-}
+};
 
 CONTAINER.addEventListener('click', renderField);
 CONTAINER.addEventListener('contextmenu', flagRender);
@@ -390,15 +578,37 @@ CONTAINER.addEventListener('contextmenu', flagRender);
 const restartGame = () => {
   fieldClick = 0;
   leftClickCount = 0;
+  CLICK_COUNT.textContent = 0;
   openedCells = [];
   flagCollection = [];
   createField();
-}
+};
 
 
 const btnClick = (evt) => {
+  TIME_COUNT.textContent = '00:00';
+  stopTimer()
+  POPUP.classList.add('popup-disable');
+  BODY.classList.remove('shadow');
+  BODY.classList.remove('scroll-lock');
   restartGame();
-}
+};
 
-const btnStart = BTN.addEventListener('click', btnClick);
+// !Новая игра
+const btnStart = NEW_GAME.addEventListener('click', btnClick);
+cloneNewGameBtn.addEventListener('click', btnClick);
+
+
+//! Переключение темы
+const themeSwitch = document.querySelector('#themeSwitch');
+themeSwitch.addEventListener('change', function() {
+
+  if (this.checked) {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+});
+
+
 
