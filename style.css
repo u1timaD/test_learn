@@ -1,20 +1,207 @@
 * {
   margin: 0;
   padding: 0;
+  /* box-sizing: border-box; */
 }
 
 body {
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: uppercase;
+
   position: relative;
 }
+
+
+.shadow::before {
+  position: absolute;
+  content: "";
+  background-color: rgba(41, 41, 41);
+  opacity: .6;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+}
+
+
+.scroll-lock {
+  overflow: hidden;
+}
+
+.main-section {
+  display: flex;
+  padding: 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: coral;
+  height: 100vh;
+}
+
+.main-box {
+  padding: 20px;
+  min-height: 350px;
+  padding-top: 30px;
+  background-color: cornflowerblue;
+  border-radius: 30px;
+}
+
+.main-btn {
+  width: 100%;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.new-game-btn,
+.setting-game-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  border-radius: 30px;
+  background-color: black;
+  cursor: pointer;
+  color: wheat;
+  text-align: center;
+  transition: transform .2s;
+}
+
+.new-game-btn:hover,
+.setting-game-btn:hover {
+  opacity: 0.8;
+}
+
+.new-game-btn:active,
+.setting-game-btn:active {
+  transform: scale(0.9);
+}
+
+
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
   flex-wrap: wrap;
 }
+
+.setting {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  /* margin-top: 30%; */
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.setting-hidden {
+  display: none;
+}
+
+.setting-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color:darkseagreen;
+  padding: 20px;
+  max-width: 500px;
+  width: 300px;
+  border-radius: 30px;
+}
+
+.setting-header {
+  display: flex;
+  margin-bottom: 30px;
+  text-decoration: underline;
+}
+
+.setting-exit {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+.setting-menu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* width: 200px; */
+  align-items: center;
+  justify-content: center;
+}
+
+.mines {
+  width: 100px;
+  height: 20px;
+  border: none;
+  font-size: 16px;
+  padding: 3px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.error-text {
+  display: none;
+  position: absolute;
+  content: '';
+  text-align: center;
+  top: 55px;
+  font-size: 14px;
+  color: red;
+  text-transform: lowercase;
+}
+
+.title-fields {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.setting-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.setting-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 40px;
+  border: none;
+  background-color: burlywood;
+  border-radius: 30px;
+  border: 3px dotted lightblue;
+  cursor: pointer;
+  transition: transform .3s, background-color .2s;
+}
+
+.setting-text {
+  display: block;
+  font-size: 16px;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.setting-btn:hover {
+  transform: scale(0.9);
+}
+
+.setting-btn:active {
+  background-color: red;
+}
+
+
 
 .line {
   display: flex;
@@ -46,7 +233,7 @@ body {
   background-color: blue;
 
   /*! ТУТ ПОМЕНЯТЬ НА +3 */
-  z-index: 3;
+  z-index: -1;
 }
 
 .cell-flag::after {
@@ -70,31 +257,50 @@ body {
   background-position: center;
 }
 
-.btn {
-  text-decoration: none;
-  outline: none;
-  width: 80px;
-  height: 50px;
-  border: none;
-  background-color: black;
-  cursor: pointer;
-  margin: 0 auto;
-  margin-top: 200px;
-  color: wheat;
-}
+
 
 .popup {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   content: '';
-  width: 500px;
-  height: 200px;
-  top: 50px;
+  top: 18%;
   left: 50%;
-  color: purple;
-  font-size: 76px;
-  background-color: brown;
-  transform: translate(-50%);
-  z-index: 5;
+  color: white;
+  text-align: center;
+  border-radius: 30px;
+  background-color: black;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.popup-disable {
+  display: none;
+}
+
+.popup-text {
+  text-align: center;
+  display: block;
+  font-size: 24px;
+  font-weight: 900;
+  width: 300px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+.popup .main-btn {
+  padding: 0;
+  /* position: absolute; */
+
+}
+
+.popup .setting-game-btn,
+.popup .new-game-btn {
+  background-color: darkcyan;
+  height: 40px;
+  width: 150px;
 }
 
 .cell-box--shadow {
@@ -102,14 +308,19 @@ body {
 }
 
 .level-box {
-  background-color: aquamarine;
-  width: 500px;
-  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 50px;
 }
+
+.field-size-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
 .level-btn {
   font: 700 normal 20px/1.5 'Courier New', Courier, monospace;;
   border: 2px solid black;
@@ -117,13 +328,14 @@ body {
   cursor: pointer;
   transition: all .2s;
 }
-.start-btn {
-  font: 700 normal 20px/1.5 'Courier New', Courier, monospace;;
-  border: 2px solid black;
-  background-color: blueviolet;
-  cursor: pointer;
-  transition: all .2s;
-  flex: 1;
+
+.level-btn--push {
+  opacity: 0.5;
+}
+
+.level-btn:hover {
+  transform: scale(0.9);
+  opacity: 0.8;
 }
 
 .level-btn:active {
@@ -139,4 +351,93 @@ background-color: yellow;
 }
 [data-level='hard'] {
   background-color: brown;
+}
+
+
+/* Стили для переключателя */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin-bottom: 20px;
+}
+
+.switch .switch-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+
+.switch-input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.switch-input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.switch-title {
+  position: absolute;
+  content: '';
+  top: -70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.count-box {
+  width: 100%;
+  height: 20px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.dark-theme .main-section {
+  background-color: darkslateblue;
+}
+
+.dark-theme .main-box {
+  background-color: darkslategray;
+}
+
+.dark-theme .setting-container {
+  background-color: sienna;
+}
+
+.dark-theme .error-text {
+  color: pink;
+}
+
+.dark-theme .setting-btn {
+  background-color:lightslategrey;
+  color: white;
 }
