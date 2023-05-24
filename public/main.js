@@ -4,6 +4,8 @@ import { changeShadowLayout } from './layout.js';
 import { startTimer, stopTimer } from './timer.js';
 
 
+const nasd = new Audio('../public/bomb.mp3');
+console.log(nasd)
 // !Заменить на запрос из input
 let QUANTITY_MINE = 10;
 // !Заменить на выбор с кнопок после 10\15\25 клеток

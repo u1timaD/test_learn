@@ -441,3 +441,8 @@ background-color: yellow;
   background-color:lightslategrey;
   color: white;
 }
+
+
+@media screen and (max-width: 500px) {
+  /* Стили */
+}
